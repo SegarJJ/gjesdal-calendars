@@ -29,7 +29,7 @@ export const WASTE_TYPES = {
   },
   glass: {
     id: "glass",
-    name: "Glass/Metalemballasje",
+    name: "Glass/Metallemballasje",
     description: "Glass- og metallemballasje",
     color: "#FF9800",
     icon: "🫙",

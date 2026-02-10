@@ -12,7 +12,7 @@ Feature: Waste type selection
       | matavfall  | Matavfall              | 🍏   |
       | restavfall | Restavfall/Bleiedunk   | 🗑️   |
       | papir      | Papp/Papir             | 📦   |
-      | glass      | Glass/Metalemballasje  | 🫙   |
+      | glass      | Glass/Metallemballasje  | 🫙   |
 
   Scenario: All waste types are selected by default
     Then all waste type checkboxes should be checked

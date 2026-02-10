@@ -246,6 +246,11 @@ function updateUI() {
   $("#download-btn").disabled = !isValid;
   $("#preview-btn").disabled = !isValid;
 
+  // Hide summary section if any of the 3 main selections are missing
+  const allSelected =
+    state.route && state.wasteTypes.size > 0 && state.alerts.length > 0;
+  $(".summary-section").style.display = allSelected ? "" : "none";
+
   updateSummary();
   updateStepIndicators();
 }
