@@ -13,9 +13,9 @@ test.describe("Alert configuration", () => {
     await expect(checkboxes).toHaveCount(3);
 
     const expected = [
-      { id: "evening-before", label: "Kvelden før (kl. 18)" },
-      { id: "12h", label: "12 timer før" },
-      { id: "morning", label: "Om morgenen (kl. 07)" },
+      { id: "evening-before", label: "Kl. 21 kvelden før" },
+      { id: "afternoon-before", label: "Kl. 17 ettermiddagen før" },
+      { id: "morning-of", label: "Kl. 07 tømmedagen" },
     ];
 
     for (const preset of expected) {
@@ -49,11 +49,11 @@ test.describe("Alert configuration", () => {
 
     await page
       .locator("label.alert-option", {
-        has: page.locator('input[value="morning"]'),
+        has: page.locator('input[value="morning-of"]'),
       })
       .click();
     await expect(
-      page.locator('input[name="alert"][value="morning"]'),
+      page.locator('input[name="alert"][value="morning-of"]'),
     ).toBeChecked();
 
     // Summary should show 2 reminders
