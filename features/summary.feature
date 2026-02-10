@@ -25,12 +25,12 @@ Feature: Calendar summary
       | Matavfall              | 13    |
       | Restavfall/Bleiedunk   | 26    |
       | Papp/Papir             | 13    |
-      | Glass/Metalemballasje  | 5     |
+      | Glass/Metallemballasje  | 5     |
 
   Scenario: Summary updates when waste types change
     Given the user has selected "Rute 3"
     And all waste types are selected
-    When the user unchecks "Glass/Metalemballasje"
+    When the user unchecks "Glass/Metallemballasje"
     Then the summary should show 52 events total
 
   Scenario: Summary shows alert configuration

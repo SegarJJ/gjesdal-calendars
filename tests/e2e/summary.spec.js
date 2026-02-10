@@ -51,7 +51,7 @@ test.describe("Calendar summary", () => {
       { name: "Matavfall", count: "13" },
       { name: "Restavfall/Bleiedunk", count: "26" },
       { name: "Papp/Papir", count: "13" },
-      { name: "Glass/Metalemballasje", count: "5" },
+      { name: "Glass/Metallemballasje", count: "5" },
     ];
 
     for (const expected of expectedCounts) {

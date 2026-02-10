@@ -16,7 +16,7 @@ test.describe("Waste type selection", () => {
       { id: "matavfall", name: "Matavfall" },
       { id: "restavfall", name: "Restavfall/Bleiedunk" },
       { id: "papir", name: "Papp/Papir" },
-      { id: "glass", name: "Glass/Metalemballasje" },
+      { id: "glass", name: "Glass/Metallemballasje" },
     ];
 
     for (const wt of expected) {
