@@ -107,12 +107,10 @@ test.describe("ICS file format compliance", () => {
     });
 
     expect(content).toContain("UID:gjesdal-r3-matavfall-2026-01-07@calendar");
-    expect(content).toContain("DTSTART;VALUE=DATE:20260107");
+    expect(content).toContain("DTSTART;TZID=Europe/Oslo:20260107T070000");
+    expect(content).toContain("DURATION:PT1H");
     expect(content).toContain("SUMMARY:🍏 Matavfall");
-    expect(content).toContain(
-      "DESCRIPTION:Matavfall tømmedag - Matrester og organisk avfall",
-    );
-    expect(content).toContain("TRANSP:TRANSPARENT");
+    expect(content).toContain("DESCRIPTION:Matavfall tømmedag");
 
     // DTSTAMP should be UTC format (YYYYMMDDTHHMMSSZ)
     const dtstamp = content.match(/DTSTAMP:(\S+)/);
@@ -123,14 +121,13 @@ test.describe("ICS file format compliance", () => {
   test("Events are sorted chronologically", async ({ page }) => {
     const content = await downloadICSContent(page, { route: 3 });
 
-    const dtStarts = [...content.matchAll(/DTSTART;VALUE=DATE:(\d{8})/g)].map(
-      (m) => m[1],
-    );
+    const dtStarts = [
+      ...content.matchAll(/DTSTART;TZID=Europe\/Oslo:(\d{8}T\d{6})/g),
+    ].map((m) => m[1]);
 
     for (let i = 1; i < dtStarts.length; i++) {
-      expect(Number(dtStarts[i])).toBeGreaterThanOrEqual(
-        Number(dtStarts[i - 1]),
-      );
+      // String comparison works for ISO datetime format
+      expect(dtStarts[i] >= dtStarts[i - 1]).toBe(true);
     }
   });
 
@@ -142,23 +139,24 @@ test.describe("ICS file format compliance", () => {
     expect(uniqueUids.size).toBe(uids.length);
   });
 
-  test("All-day events - TRANSP and BUSYSTATUS", async ({ page }) => {
+  test("Timed events with DURATION", async ({ page }) => {
     const content = await downloadICSContent(page, {
       route: 3,
       wasteTypes: ["matavfall"],
       alerts: "none",
     });
 
-    // Every DTSTART should be VALUE=DATE (no time)
-    const dtStarts = content.match(/DTSTART.*/g) || [];
+    // Every VEVENT DTSTART should have TZID (timed event at 7am)
+    // Use a more specific regex to avoid matching VTIMEZONE DTSTART
+    const dtStarts =
+      content.match(/DTSTART;TZID=Europe\/Oslo:\d{8}T\d{6}/g) || [];
     expect(dtStarts.length).toBeGreaterThan(0);
     for (const ds of dtStarts) {
-      expect(ds).toContain("VALUE=DATE");
-      expect(ds).not.toMatch(/T\d{6}/); // No time component
+      expect(ds).toMatch(/T070000/); // 7am time component
     }
 
-    expect(content).toContain("TRANSP:TRANSPARENT");
-    expect(content).toContain("X-MICROSOFT-CDO-BUSYSTATUS:FREE");
+    // Every event should have DURATION
+    expect(content).toContain("DURATION:PT1H");
   });
 
   test("VALARM structure with evening-before alert", async ({ page }) => {
@@ -170,7 +168,7 @@ test.describe("ICS file format compliance", () => {
 
     expect(content).toContain("BEGIN:VALARM");
     expect(content).toContain("ACTION:DISPLAY");
-    expect(content).toContain("TRIGGER:-PT6H");
+    expect(content).toContain("TRIGGER:-PT10H");
     expect(content).toContain("DESCRIPTION:Matavfall henting");
     expect(content).toContain("END:VALARM");
   });
@@ -179,15 +177,15 @@ test.describe("ICS file format compliance", () => {
     const content = await downloadICSContent(page, {
       route: 3,
       wasteTypes: ["matavfall"],
-      alerts: ["evening-before", "morning"],
+      alerts: ["evening-before", "morning-of"],
     });
 
     // 13 events × 2 alarms = 26 VALARM blocks
     const alarms = content.match(/BEGIN:VALARM/g);
     expect(alarms).toHaveLength(26);
 
-    expect(content).toContain("TRIGGER:-PT6H");
-    expect(content).toContain("TRIGGER:-PT17H");
+    expect(content).toContain("TRIGGER:-PT10H");
+    expect(content).toContain("TRIGGER:-PT0H");
   });
 
   test("PRODID includes calendar name", async ({ page }) => {

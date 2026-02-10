@@ -107,8 +107,10 @@ test.describe("Download calendar file", () => {
     const events = content.match(/BEGIN:VEVENT/g);
     expect(events).toHaveLength(13);
 
-    // All events should have DTSTART with VALUE=DATE
-    const dtStartMatches = content.match(/DTSTART;VALUE=DATE:\d{8}/g);
+    // All events should have DTSTART with TZID (timed events at 7am)
+    const dtStartMatches = content.match(
+      /DTSTART;TZID=Europe\/Oslo:\d{8}T070000/g,
+    );
     expect(dtStartMatches).toHaveLength(13);
 
     // All UIDs should be unique
@@ -147,7 +149,7 @@ test.describe("Download calendar file", () => {
     const alarms = content.match(/BEGIN:VALARM/g);
     expect(alarms).toHaveLength(13); // One per event
 
-    expect(content).toContain("TRIGGER:-PT6H");
+    expect(content).toContain("TRIGGER:-PT10H");
   });
 
   test("Downloaded ICS file has no alerts when none configured", async ({

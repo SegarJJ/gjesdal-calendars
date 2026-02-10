@@ -87,6 +87,6 @@ test.describe("Calendar summary", () => {
     // Default alert "evening-before" is checked
     await expect(
       page.locator("#summary-content .summary-alerts"),
-    ).toContainText("Kvelden før (kl. 18)");
+    ).toContainText("Kl. 21 kvelden før");
   });
 });

@@ -396,9 +396,9 @@ export const ALERT_PRESETS = [
     description: "Kl. 17 ettermiddagen før henting",
   },
   {
-    id: "noon-before",
-    label: "Kl. 12 dagen før",
-    duration: "PT19H",
-    description: "Kl. 12 dagen før henting",
+    id: "morning-of",
+    label: "Kl. 07 tømmedagen",
+    duration: "PT0H",
+    description: "Kl. 07 på tømmedagen",
   },
 ];
