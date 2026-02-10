@@ -89,7 +89,7 @@ function buildEvent(dateStr, wasteType, alerts, dtstamp, routeNum) {
   } else if (wasteType.id === "matavfall") {
     description = `Matavfall tømmedag\\n\\nTrenger du nye poser til matavfallet?\\nKnyt en pose på dunken din, så vil renovasjonen legge igjen ny rull til deg.\\nPoser kan også hentes på Veveriet.`;
   } else {
-    description = `${wasteType.name} tømmedag - ${wasteType.description}`;
+    description = `${wasteType.name} tømmedag`;
   }
 
   const alarmBlocks = alerts
