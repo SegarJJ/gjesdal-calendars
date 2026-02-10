@@ -15,6 +15,18 @@ function formatICSDate(dateStr) {
 }
 
 /**
+ * Format a Date as an ICS DATETIME value: YYYYMMDDTHHMMSS
+ * @param {string} dateStr - ISO date string (YYYY-MM-DD)
+ * @param {string} time - Time in HH:MM:SS format
+ * @returns {string} ICS datetime format
+ */
+function formatICSDateTime(dateStr, time = "07:00:00") {
+  const dateOnly = dateStr.replace(/-/g, "");
+  const timeOnly = time.replace(/:/g, "");
+  return `${dateOnly}T${timeOnly}`;
+}
+
+/**
  * Generate a UTC timestamp for DTSTAMP in ICS format.
  */
 function nowUTC() {
@@ -69,26 +81,38 @@ function buildAlarms(summary, alerts) {
 function buildEvent(dateStr, wasteType, alerts, dtstamp, routeNum) {
   const uid = `gjesdal-r${routeNum}-${wasteType.id}-${dateStr}@calendar`;
   const summary = `${wasteType.icon} ${wasteType.name}`;
-  const description = `${wasteType.name} tømmedag - ${wasteType.description}`;
-  const alarmBlocks =
-    alerts.length > 0
-      ? "\r\n" + buildAlarms(`${wasteType.name} henting`, alerts)
-      : "";
 
-  return [
+  // Set description based on waste type
+  let description;
+  if (wasteType.id === "restavfall") {
+    description = `Restavfall/Bleiedunk tømmedag\\n\\nEkstrasekk til restavfall:\\nVipps kr. 65 til 835115.\\nSkriv «Avfallssekk» på gjennomsiktig\\nsøppelsekk og sett sekken ved restavfallsdunken.`;
+  } else if (wasteType.id === "matavfall") {
+    description = `Matavfall tømmedag\\n\\nTrenger du nye poser til matavfallet?\\nKnyt en pose på dunken din, så vil renovasjonen legge igjen ny rull til deg.\\nPoser kan også hentes på Veveriet.`;
+  } else {
+    description = `${wasteType.name} tømmedag - ${wasteType.description}`;
+  }
+
+  const alarmBlocks = alerts
+    .map((alert) => buildAlarms(`${wasteType.name} henting`, [alert]))
+    .join("\r\n");
+
+  const eventLines = [
     "BEGIN:VEVENT",
     `UID:${uid}`,
     `DTSTAMP:${dtstamp}`,
-    `DTSTART;VALUE=DATE:${formatICSDate(dateStr)}`,
+    `DTSTART;TZID=Europe/Oslo:${formatICSDateTime(dateStr, "07:00:00")}`,
+    `DURATION:PT1H`,
     foldLine(`SUMMARY:${summary}`),
     foldLine(`DESCRIPTION:${description}`),
-    `TRANSP:TRANSPARENT`,
-    `X-MICROSOFT-CDO-BUSYSTATUS:FREE`,
-    alarmBlocks ? alarmBlocks : "",
-    "END:VEVENT",
-  ]
-    .filter(Boolean)
-    .join("\r\n");
+  ];
+
+  if (alarmBlocks) {
+    eventLines.push(alarmBlocks);
+  }
+
+  eventLines.push("END:VEVENT");
+
+  return eventLines.join("\r\n");
 }
 
 /**
@@ -127,6 +151,27 @@ export function generateICS({ route, wasteTypeIds, alerts }) {
 
   const calName = `Gjesdal Tømmekalender 2026 - ${routeData.name}`;
 
+  // VTIMEZONE component for Europe/Oslo
+  const vtimezone = [
+    "BEGIN:VTIMEZONE",
+    "TZID:Europe/Oslo",
+    "BEGIN:DAYLIGHT",
+    "TZOFFSETFROM:+0100",
+    "TZOFFSETTO:+0200",
+    "TZNAME:CEST",
+    "DTSTART:19700329T020000",
+    "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU",
+    "END:DAYLIGHT",
+    "BEGIN:STANDARD",
+    "TZOFFSETFROM:+0200",
+    "TZOFFSETTO:+0100",
+    "TZNAME:CET",
+    "DTSTART:19701025T030000",
+    "RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU",
+    "END:STANDARD",
+    "END:VTIMEZONE",
+  ].join("\r\n");
+
   const ics = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
@@ -135,6 +180,8 @@ export function generateICS({ route, wasteTypeIds, alerts }) {
     "METHOD:PUBLISH",
     foldLine(`X-WR-CALNAME:${calName}`),
     "X-WR-TIMEZONE:Europe/Oslo",
+    "",
+    vtimezone,
     "",
     events.map((e) => e.text).join("\r\n\r\n"),
     "",

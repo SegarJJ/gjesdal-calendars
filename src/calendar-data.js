@@ -385,20 +385,20 @@ export const ROUTES = {
 export const ALERT_PRESETS = [
   {
     id: "evening-before",
-    label: "Kvelden før (kl. 18)",
-    duration: "PT6H",
-    description: "Kl. 18 kvelden før henting",
+    label: "Kl. 21 kvelden før",
+    duration: "PT10H",
+    description: "Kl. 21 kvelden før henting",
   },
   {
-    id: "12h",
-    label: "12 timer før",
-    duration: "PT12H",
-    description: "12 timer før henting",
+    id: "afternoon-before",
+    label: "Kl. 17 ettermiddagen før",
+    duration: "PT14H",
+    description: "Kl. 17 ettermiddagen før henting",
   },
   {
-    id: "morning",
-    label: "Om morgenen (kl. 07)",
-    duration: "PT17H",
-    description: "Kl. 07 på tømmedagen",
+    id: "noon-before",
+    label: "Kl. 12 dagen før",
+    duration: "PT19H",
+    description: "Kl. 12 dagen før henting",
   },
 ];
