@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gjesdal Tømmekalender 2026</title>
+    <link rel="stylesheet" href="src/styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♻️</text></svg>"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <h1>♻️ Gjesdal Tømmekalender 2026</h1>
+      <p>Lag din egen kalender med påminnelser for avfallshenting</p>
+    </header>
+
+    <main class="main">
+      <!-- Step 1: Choose route -->
+      <section class="step" id="step-1">
+        <div class="step-header">
+          <span class="step-number">1</span>
+          <span class="step-title">Velgg din rute</span>
+        </div>
+        <p class="step-description">
+          Velg ruten for ditt område. Trykk ℹ️ for å se hvilke gater som
+          tilhører hver rute.
+        </p>
+        <div class="route-grid" id="route-options"></div>
+      </section>
+
+      <!-- Step 2: Choose waste types -->
+      <section class="step" id="step-2">
+        <div class="step-header">
+          <span class="step-number">2</span>
+          <span class="step-title">Velg avfallstyper</span>
+        </div>
+        <p class="step-description">
+          Velg hvilke avfallstyper du vil ha i kalenderen din.
+        </p>
+        <div class="waste-type-grid" id="waste-type-options"></div>
+        <div class="waste-actions">
+          <button class="btn-link" id="select-all-waste">Velg alle</button>
+          <button class="btn-link" id="select-none-waste">Velg ingen</button>
+        </div>
+      </section>
+
+      <!-- Step 3: Configure alerts -->
+      <section class="step" id="step-3">
+        <div class="step-header">
+          <span class="step-number">3</span>
+          <span class="step-title">Velg påminnelser</span>
+        </div>
+        <p class="step-description">
+          Velg når du vil bli påminnet. Du kan velge flere, eller ingen.
+        </p>
+        <div class="alert-grid" id="alert-options"></div>
+      </section>
+
+      <!-- Summary -->
+      <section class="summary-section">
+        <h2>📋 Oppsummering</h2>
+        <div id="summary-content">
+          <p class="summary-empty">
+            Velg rute og avfallstyper for å se en oppsummering.
+          </p>
+        </div>
+      </section>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button class="btn btn-primary" id="download-btn" disabled>
+          📅 Last ned kalenderfil (.ics)
+        </button>
+        <button class="btn btn-secondary" id="preview-btn" disabled>
+          👁 Forhåndsvisning
+        </button>
+      </div>
+
+      <!-- Preview (hidden by default) -->
+      <div class="preview-panel" id="preview-panel">
+        <div id="preview-content"></div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Denne tjenesten er uoffisiell og basert på data fra
+        <a href="https://www.gjesdal.kommune.no" target="_blank" rel="noopener"
+          >Gjesdal kommune</a
+        >. <br />Kalenderfiler (.ics) fungerer med Apple Kalender, Google
+        Kalender, Outlook og de fleste kalenderapper.
+      </p>
+    </footer>
+
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>

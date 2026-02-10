@@ -1,0 +1,9 @@
+.venv/
+.DS_Store
+__pycache__/
+*.pyc
+node_modules/
+output/
+input/*.png
+test-results/
+playwright-report/

@@ -1,0 +1,33 @@
+{
+    "name": "Gjesdal Tømmekalender",
+    "image": "mcr.microsoft.com/devcontainers/python:3.12",
+    "features": {
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "lts"
+        }
+    },
+    "postCreateCommand": "pip install pymupdf Pillow numpy && npm install -g browser-sync",
+    "forwardPorts": [
+        3000
+    ],
+    "portsAttributes": {
+        "3000": {
+            "label": "Live Server",
+            "onAutoForward": "openBrowser"
+        }
+    },
+    "postStartCommand": "browser-sync start --server --files 'index.html, src/**/*' --port 3000 --no-open &",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode"
+            ],
+            "settings": {
+                "editor.formatOnSave": true,
+                "editor.defaultFormatter": "esbenp.prettier-vscode"
+            }
+        }
+    }
+}
