@@ -1,5 +1,6 @@
 // @ts-check
-const { test, expect } = require("@playwright/test");
+import { test, expect } from "@playwright/test";
+import fs from "fs";
 
 // Feature: ICS file format compliance
 // These tests generate ICS via download and verify RFC 5545 compliance.
@@ -71,7 +72,6 @@ async function downloadICSContent(page, { route, wasteTypes, alerts } = {}) {
   const download = await downloadPromise;
 
   const path = await download.path();
-  const fs = require("fs");
   return fs.readFileSync(path, "utf-8");
 }
 

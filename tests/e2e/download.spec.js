@@ -1,5 +1,6 @@
 // @ts-check
-const { test, expect } = require("@playwright/test");
+import { test, expect } from "@playwright/test";
+import fs from "fs";
 
 // Feature: Download calendar file
 
@@ -69,7 +70,6 @@ test.describe("Download calendar file", () => {
     const download = await downloadPromise;
 
     const path = await download.path();
-    const fs = require("fs");
     const content = fs.readFileSync(path, "utf-8");
 
     expect(content).toMatch(/^BEGIN:VCALENDAR/);
@@ -101,7 +101,6 @@ test.describe("Download calendar file", () => {
     const download = await downloadPromise;
 
     const path = await download.path();
-    const fs = require("fs");
     const content = fs.readFileSync(path, "utf-8");
 
     const events = content.match(/BEGIN:VEVENT/g);
@@ -143,7 +142,6 @@ test.describe("Download calendar file", () => {
     const download = await downloadPromise;
 
     const path = await download.path();
-    const fs = require("fs");
     const content = fs.readFileSync(path, "utf-8");
 
     const alarms = content.match(/BEGIN:VALARM/g);
@@ -177,7 +175,6 @@ test.describe("Download calendar file", () => {
     const download = await downloadPromise;
 
     const path = await download.path();
-    const fs = require("fs");
     const content = fs.readFileSync(path, "utf-8");
 
     expect(content).not.toContain("BEGIN:VALARM");

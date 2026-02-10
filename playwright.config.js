@@ -1,8 +1,8 @@
 // @ts-check
-const { defineConfig } = require("@playwright/test");
+import { defineConfig } from "@playwright/test";
 
-module.exports = defineConfig({
-  testDir: "./tests/e2e",
+export default defineConfig({
+  testDir: "./tests",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 0,
@@ -16,7 +16,12 @@ module.exports = defineConfig({
   },
   projects: [
     {
-      name: "chromium",
+      name: "unit",
+      testMatch: /.*\/unit\/.*\.spec\.js/,
+    },
+    {
+      name: "e2e",
+      testMatch: /.*\/e2e\/.*\.spec\.js/,
       use: { browserName: "chromium" },
     },
   ],
