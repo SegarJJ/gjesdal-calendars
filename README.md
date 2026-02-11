@@ -8,6 +8,10 @@ Users pick their route (Rute 1–4), choose which waste types to include (matavf
 
 View this url on your phone https://segarjj.github.io/gjesdal-calendars/ and select your route, your pickups, and your alerts.  The tool will give you a preview of the calendar events that will be built into the .ics file of your design.  Your phone will guide you through the rest of the steps to add the events to your own calendar on your mobile device.
 
+<p align="center">
+  <img src="./src/assets/screenshot.png" alt="screenshot" />
+</p>
+
 ## Project structure
 
 ```
