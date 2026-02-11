@@ -4,6 +4,10 @@ A web app that lets residents of Gjesdal municipality (Norway) generate personal
 
 Users pick their route (Rute 1–4), choose which waste types to include (matavfall, restavfall, papp/papir, glass/metall), optionally add reminder alerts, and download a `.ics` file they can import into Apple Calendar, Google Calendar, Outlook or any other calendar app.
 
+## Try it out
+
+View this url on your phone https://segarjj.github.io/gjesdal-calendars/ and select your route, your pickups, and your alerts.  The tool will give you a preview of the calendar events that will be built into the .ics file of your design.  Your phone will guide you through the rest of the steps to add the events to your own calendar on your mobile device.
+
 ## Project structure
 
 ```
