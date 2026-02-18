@@ -384,16 +384,16 @@ export const ROUTES = {
  */
 export const ALERT_PRESETS = [
   {
-    id: "evening-before",
-    label: "Kl. 21 kvelden før",
-    duration: "PT10H",
-    description: "Kl. 21 kvelden før henting",
-  },
-  {
     id: "afternoon-before",
     label: "Kl. 17 ettermiddagen før",
     duration: "PT14H",
     description: "Kl. 17 ettermiddagen før henting",
+  },
+  {
+    id: "evening-before",
+    label: "Kl. 21 kvelden før",
+    duration: "PT10H",
+    description: "Kl. 21 kvelden før henting",
   },
   {
     id: "morning-of",

@@ -674,7 +674,7 @@ body {
   border-radius: 6px;
   font-size: 0.75rem;
   overflow-x: auto;
-  max-height: 400px;
+  max-height: 800px;
   overflow-y: auto;
 }
 

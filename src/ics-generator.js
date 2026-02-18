@@ -180,11 +180,8 @@ export function generateICS({ route, wasteTypeIds, alerts }) {
     "METHOD:PUBLISH",
     foldLine(`X-WR-CALNAME:${calName}`),
     "X-WR-TIMEZONE:Europe/Oslo",
-    "",
     vtimezone,
-    "",
-    events.map((e) => e.text).join("\r\n\r\n"),
-    "",
+    events.map((e) => e.text).join("\r\n"),
     "END:VCALENDAR",
   ].join("\r\n");
 
