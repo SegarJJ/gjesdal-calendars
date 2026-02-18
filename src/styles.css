@@ -719,6 +719,13 @@ body {
   color: var(--color-primary);
 }
 
+.footer-version {
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+}
+
 /* ── Responsive ─────────────────────────────────────────────────────── */
 
 @media (max-width: 480px) {
